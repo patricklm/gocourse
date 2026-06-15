@@ -1,0 +1,46 @@
+package intermediate
+
+import "fmt"
+
+func main() {
+	fmt.Println("Closure in GO")
+
+	seq1 := adder()
+	fmt.Println(seq1())
+	fmt.Println(seq1())
+	fmt.Println(seq1())
+	fmt.Println(seq1())
+	fmt.Println(seq1())
+
+	seq2 := adder()
+	fmt.Println(seq2())
+	fmt.Println(seq2())
+	fmt.Println(seq2())
+
+	subtractor := func() func(int) int {
+		countdown := 99
+		return func(x int) int {
+			countdown -= x
+			return countdown
+		}
+	}()
+
+	// using closure subtractor
+	fmt.Println(subtractor(5))
+	fmt.Println(subtractor(5))
+
+	fmt.Println(subtractor(2))
+	fmt.Println(subtractor(10))
+	fmt.Println(subtractor(50))
+
+}
+
+func adder() func() int {
+	i := 0 // stateful
+	fmt.Println("Previous value of i:", i)
+	return func() int {
+		i++
+		fmt.Println("added 1 to i")
+		return i
+	}
+}
